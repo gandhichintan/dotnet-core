@@ -1,0 +1,41 @@
+﻿@model TestApp.Core.ViewModels.LoginVM
+
+<div class="row vertical-divider">
+    <div class="col-md-6">
+        <div class="mt-20">
+            <p>
+                This is test application for simple banking service.
+                By default there are two account to achive transaction functionality.
+            </p>
+            <p>Accounts :</p>
+            <div class="form-group">
+                <label>Username : testaccount@bank.com</label><br />
+                <label>
+                    Password : Test@ccount1
+                </label>
+            </div>
+            <div class="form-group">
+                <label>Username : demoaccount@bank.com</label><br />
+                <label>
+                    Password : Demo@ccount1
+                </label>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-6">
+        <div class="login-container">
+            @Html.ValidationSummary(true)
+            @Html.ValidationMessage("authenticationError")
+            <h1>Login to Your Account</h1><br>
+            <form method="post" asp-action="Login" asp-controller="Authentication">
+                <input type="text" name="username" placeholder="Username" asp-for="@Model.Username" required>
+                <span class="error" asp-validation-for="@Model.Username"></span>
+                <input type="password" name="Password" placeholder="Password" asp-for="@Model.Password" value="@Model.Password" required>
+                <span class="error" asp-validation-for="@Model.Password"></span>
+                <input type="submit" name="login" class="login loginmodal-submit" value="Login">
+            </form>
+        </div>
+    </div>
+</div>

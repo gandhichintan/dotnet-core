@@ -1,0 +1,118 @@
+﻿<div class="alert alert-danger fade in" style="display:none;">
+    <a href="#" class="close" data-dismiss="alert">&times;</a>
+    <label id="message"></label>
+</div>
+<div class="page-dashboard page-standard-layout">
+    <div class="page-content">
+        <div class="left col-md-3">
+            <div class="navbar nav-pills">
+                <div class="">
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav nav-pills">
+                            <li class="col-xs-12"><a href ng-click="show = 'deposit'">Deposit Amount</a></li>
+                        </ul>
+                        <ul class="nav nav-pills">
+                            <li class="col-xs-12"><a href ng-click="show = 'withdraw'">Withdraw Amount</a></li>
+                        </ul>
+                        <ul class="nav nav-pills">
+                            <li class="col-xs-12"><a href ng-click="show = 'transfer'">Transfer Amount</a></li>
+                        </ul>
+                        <ul class="nav nav-pills">
+                            <li class="col-xs-12"><a href ng-click="show = 'statement';">Account Statement</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="right col-md-9">
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <label class="control-label">Current available balance : {{balance}}</label>
+                    </div>
+                </div>
+
+                <div id="deposit" ng-show="show === 'deposit'" class="panel panel-info">
+                    <div class="panel-heading"><label>Deposit</label></div>
+                    <div class="panel-body">
+                        <form name="depositForm" class="form-inline">
+                            <div class="form-group" ng-class="{ 'has-error': depositeForm.depositAmount.$invalid }">
+                                <label class="control-label">Amount :</label>
+                                <input class="form-control" name="depositAmount" ng-model="depositAmount" required />
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-default" ng-disabled="depositAmount == undefined" ng-click="deposit(depositAmount)">Deposit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="withdraw" ng-show="show === 'withdraw'" class="panel panel-info">
+                    <div class="panel-heading"><label>Withdraw</label></div>
+                    <div class="panel-body ">
+                        <form name="withdrawForm" class="form-inline">
+                            <div class="form-group" ng-class="{ 'has-error': withdrawForm.withdrawAmount.$invalid }">
+                                <label class="control-label">Amount :</label>
+                                <input class="form-control" name="withdrawAmount" ng-model="withdrawAmount" required />
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-default" ng-disabled="withdrawAmount == undefined" ng-click="withdraw(withdrawAmount)">Withdraw</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="transfer" ng-show="show === 'transfer'" class="panel panel-info">
+                    <div class="panel-heading"><label>Transfer Fund</label></div>
+                    <div class="panel-body ">
+                        <form name="transferForm" class="form-inline">
+                            <div class="form-group" ng-class="{ 'has-error': transferForm.transferAccount.$invalid }">
+                                <label class="control-label">Account :</label>
+                                <input class="form-control" name="transferAccount" ng-model="transferAccount" required />
+                            </div>
+                            <div class="form-group" ng-class="{ 'has-error': transferForm.transferAmount.$invalid }">
+                                <label class="control-label">Amount :</label>
+                                <input class="form-control" name="transferAmount" ng-model="transferAmount" required />
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-default" ng-disabled="transferAmount == undefined || transferAccount == undefined" ng-click="transferFund(transferAccount,transferAmount)">Transfer</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="statement" ng-show="show === 'statement'" class="panel panel-info">
+                    <div class="panel-heading col-md-12">
+                        <label class="pull-left">Account Statement</label>
+                        <input type="button" class="btn btn-default pull-right" ng-click="getStatement()" value="Show Statement" />
+                    </div>
+                    <div class="panel-body">
+                        <table class="table">
+                            <thead class="thead-inverse">
+                                <tr>
+                                    <th>Number</th>
+                                    <th>Perticulars</th>
+                                    <th>Debit</th>
+                                    <th>Credit</th>
+                                    <th>Balance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="transaction in transactions">
+                                    <th scope="row">{{transaction.Number}}</th>
+                                    <td>{{transaction.Perticulars}}</td>
+                                    <td>{{transaction.IsDebit ? transaction.Amount : ''}}</td>
+                                    <td>{{transaction.IsDebit == false ? transaction.Amount : '' }}</td>
+                                    <td>{{transaction.Balance}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="form-group">
+                            <lable ng-show="transactions.length == 0">No transaction found!</lable>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
